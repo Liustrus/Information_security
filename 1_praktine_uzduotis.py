@@ -21,7 +21,7 @@ def cypher(text, key):
         x += 1
         i += 1
     coded_string = ''.join(coded)
-    print(coded_string)
+    print('\nYour cyphered text is: ' + coded_string)
     return coded
 
 def decypher(coded, key):
@@ -44,7 +44,7 @@ def decypher(coded, key):
         xx += 1
         ii += 1
     decoded_string = ''.join(decoded)
-    print(decoded_string)
+    print('\nYour text decyphered is: ' + decoded_string)
     return decoded
 
 
