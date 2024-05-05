@@ -51,7 +51,6 @@ def decrypt_cfb(ciphertext, key):
 
 
 print("LIFE HAS MANY DOORS. DO YOU HAVE YOUR KEY?")
-print("")
 print("A) Data encryption")
 print("B) Data decryption")
 print("")
@@ -60,7 +59,7 @@ choice = input("Choose what you would like to achieve: ").upper()
 if choice == 'A':
     mode_choice = input("Choose encryption mode (ECB/CBC/CFB): ").upper()
     message = input("Enter text to encrypt: ")
-    key = input("Enter your key (16 characters): ").encode()
+    key = input("Enter key (16 characters): ").encode()
 
     if mode_choice == 'ECB':
         encrypted_message = encrypt_ecb(message, key)
@@ -72,11 +71,11 @@ if choice == 'A':
         encrypted_message = encrypt_cfb(message, key)
         print("Encrypted (CFB mode):", encrypted_message.hex())
     else:
-        print("Invalid encryption mode")
+        print("No such mode")
 
     save_choice = input("Would you like to save the encrypted text to a file? (Y/N): ").upper()
     if save_choice == 'Y':
-        filename = input("Enter the filename to save: ").strip()
+        filename = input("Enter name for file: ").strip()
         full_filename = os.path.join(os.path.dirname(__file__), f"{filename}.txt")
         with open(full_filename, 'wb') as file:
             file.write(encrypted_message)
@@ -84,21 +83,21 @@ if choice == 'A':
 
 elif choice == 'B':
     mode_choice = input("Choose decryption mode (ECB/CBC/CFB): ").upper()
-    decryption_choice = input("How would you like to provide the ciphertext? (Text/File): ").upper()
+    decryption_choice = input("How would you like to provide the text? (Text/File): ").upper()
 
     if decryption_choice == 'TEXT':
         ciphertext = bytes.fromhex(input("Enter text to decrypt: "))
     elif decryption_choice == 'FILE':
-        filename = input("Enter the filename to read ciphertext from: ").strip()
+        filename = input("Enter the file path to read text from (remove .txt at the end of path name): ").strip()
         full_filename = os.path.join(os.path.dirname(__file__), f"{filename}.txt")
         try:
             with open(full_filename, 'rb') as file:
                 ciphertext = file.read()
         except FileNotFoundError:
-            print("File not found. Please make sure the file exists.")
+            print("File not found. Make sure to remove .txt from file path")
             exit()
 
-    key = input("Enter your key (16 characters): ").encode()
+    key = input("Enter key (16 characters): ").encode()
 
     if mode_choice == 'ECB':
         decrypted_message = decrypt_ecb(ciphertext, key)
@@ -110,8 +109,8 @@ elif choice == 'B':
         decrypted_message = decrypt_cfb(ciphertext, key)
         print("Decrypted (CFB mode):", decrypted_message)
     else:
-        print("Invalid decryption mode")
+        print("No such mode")
 
 
 else:
-    print("Invalid choice")
+    print("No such choice")
